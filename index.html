@@ -73,10 +73,17 @@
 </head>
 <body>
 	<div class="main">
-		<h1 class="h1">Numbered Vanila v1.0.1</h1>
+		<h1 class="h1">Numbered Vanila v1.0.4</h1>
 		<div class='box'>
 			<h3 class="h3">Phone</h3>
 			<input class="input" id="example1" value='1234567890'>
+			<br>
+			<button class="get">
+				Get Value
+			</button>
+			<button class="get-raw">
+				Get Raw Value
+			</button>
 		</div>
 		<div class='box'>
 			<h3 class="h3">Card</h3>
@@ -111,6 +118,15 @@
 		});
 		$('.clear').on('click', function (event) {
 			example3.setVal('');
+		});
+		$('.get').on('click', function (event) {
+			alert('Value: ' + example1.getVal());
+		});
+		$('.get-raw').on('click', function (event) {
+			alert('Raw value: ' +example1.getVal(true));
+		});
+		$('.get-raw-hard').on('click', function (event) {
+			alert('Raw value: ' +example1.getVal(true));
 		});
 
 		$('.input').on('input change blur focusin', function (event) {

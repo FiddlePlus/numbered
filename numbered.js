@@ -1,4 +1,4 @@
-/*! numbered v1.0.1 | pavel-yagodin | MIT License | https://github.com/CSSSR/jquery.numbered */
+/*! numbered v1.0.4 | pavel-yagodin | MIT License | https://github.com/CSSSR/jquery.numbered */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		define([], factory);
@@ -50,6 +50,7 @@
 		self.config.regexp      = new RegExp('^' + self.config.mask + '$');
 		self.config.events      = ['input', 'change', 'click', 'focusin', 'blur'];
 
+		console.log(self.config);
 
 
 		self._eventFire = function(el, etype){
@@ -101,6 +102,7 @@
 			var maskNumsIndex = 0;
 			var valueFormattedRes = [];
 			var maskSplit = numbered.params.mask.split('');
+			console.log(valueFormatted);
 
 			for (var key in maskSplit) {
 				var val = maskSplit[key];
@@ -125,7 +127,6 @@
 				}
 			}
 			value = valueFormattedRes.join('');
-
 
 			var position = (positionEnd >= 0 ? positionEnd + 1 : positionStart);
 			if (event.type !== 'click') {
@@ -188,22 +189,23 @@
 			return null;
 		};
 
-		self.validate = function () {
+		self.validate = function (input = false) {
 			var self = this;
 			var res = self.inputs.length > 1 ? [] : false;
-			for (var index in self.inputs) {
-				var $input = self.inputs[index];
+			var inputs = input !== false ? [input] : self.inputs;
+			for (var index in inputs) {
+				var $input = inputs[index];
 				var validate;
 
-				if (self.inputs[index].numbered.config.regexp.test(self.inputs[index].numbered.input.value)) {
+				if (inputs[index].numbered.config.regexp.test(inputs[index].numbered.input.value)) {
 					validate = 1;
-				} else if (self.inputs[index].numbered.input.value === '' || self.inputs[index].numbered.input.value === self.inputs[index].numbered.config.placeholder) {
+				} else if (inputs[index].numbered.input.value === '' || inputs[index].numbered.input.value === inputs[index].numbered.config.placeholder) {
 					validate = 0;
 				} else {
 					validate = -1;
 				}
 
-				if (self.inputs.length > 1) {
+				if (inputs.length > 1) {
 					res.push(validate);
 				} else {
 					res = validate;
@@ -231,6 +233,25 @@
 				self._eventFire($input, 'blur');
 			}
 			return res;
+		};
+
+		self.getVal = function (raw = false) {
+			var values = [];
+			for (var index in this.inputs) {
+				var $input = this.inputs[index];
+				var value = $input.value;
+
+				if (raw) {
+					if (this.validate($input) > 0) {
+						var arr = value.match(this.config.regexp);
+						value = arr.slice(1, arr.length).join('');
+					} else {
+						value = $input.value.replace(/[^\d]/gi, '');
+					}
+				}
+				values.push(value);
+			}
+			return values.length>1?values:values[0];
 		};
 
 		return self;
