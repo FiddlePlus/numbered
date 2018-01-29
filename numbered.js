@@ -50,7 +50,7 @@
 		self.config.regexp      = new RegExp('^' + self.config.mask + '$');
 		self.config.events      = ['input', 'change', 'click', 'focusin', 'blur'];
 
-		console.log(self.config);
+		// console.log(self.config);
 
 
 		self._eventFire = function(el, etype){
@@ -102,7 +102,7 @@
 			var maskNumsIndex = 0;
 			var valueFormattedRes = [];
 			var maskSplit = numbered.params.mask.split('');
-			console.log(valueFormatted);
+			// console.log(valueFormatted);
 
 			for (var key in maskSplit) {
 				var val = maskSplit[key];
@@ -189,7 +189,8 @@
 			return null;
 		};
 
-		self.validate = function (input = false) {
+		self.validate = function (i) {
+			var input = i || false;
 			var self = this;
 			var res = self.inputs.length > 1 ? [] : false;
 			var inputs = input !== false ? [input] : self.inputs;
