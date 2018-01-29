@@ -1,4 +1,4 @@
-/*! numbered v1.0.4 | pavel-yagodin | MIT License | https://github.com/CSSSR/jquery.numbered */
+/*! numbered v1.0.6 | pavel-yagodin | MIT License | https://github.com/CSSSR/jquery.numbered */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		define([], factory);
@@ -236,7 +236,8 @@
 			return res;
 		};
 
-		self.getVal = function (raw = false) {
+		self.getVal = function (r) {
+			var raw = r || false;
 			var values = [];
 			for (var index in this.inputs) {
 				var $input = this.inputs[index];
